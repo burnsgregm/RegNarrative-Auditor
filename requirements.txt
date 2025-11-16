@@ -5,3 +5,9 @@ langchain-google-genai
 psycopg2-binary
 pgvector
 google-genai
+langchain_text_splitters
+pypdf
+unstructured
+langchain-unstructured
+beautifulsoup4
+html2text

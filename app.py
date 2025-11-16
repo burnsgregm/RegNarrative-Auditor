@@ -48,13 +48,14 @@ def get_vectorstore(_embeddings):
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
     def connect_to_pgvector():
+        # This is a lazy constructor. We just create the object.
+        # The *actual* connection will be tested on the first query.
         vectorstore = PGVector(
             connection_string=DB_CONNECTION_STRING,
             embedding_function=_embeddings,
             collection_name=COLLECTION_NAME
         )
-        # Test connection
-        vectorstore.get_relevant_documents("test connection")
+        # We removed the faulty 'get_relevant_documents("test")' line.
         return vectorstore
         
     try:
@@ -216,7 +217,7 @@ with st.sidebar:
     sources = get_knowledge_base_sources(vectorstore)
     if sources:
         for source in sources:
-            st.markdown(f"- `{source}`") # <-- THIS IS THE CORRECTED LINE
+            st.markdown(f"- `{source}`")
     else:
         st.markdown("No documents found in knowledge base.")
 
